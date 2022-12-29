@@ -38,7 +38,7 @@ class CoinDetailActivity : AppCompatActivity() {
             textViewMaxPrice.text = it.highday.toString()
             textViewLastDeal.text = it.market
             textViewTime.text = it.getFormattedTime()
-            textViewTime.text = it.fromsymbol
+            textViewSymbol.text = it.fromsymbol
             Picasso.get().load(it.getFullImageUrl()).into(imageViewLogo)
         })
     }
