@@ -1,8 +1,13 @@
 package com.example.cryptolist.pojo
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.cryptolist.api.ApiFactory.BASE_IMAGE_URL
+import com.example.cryptolist.utils.convertTimesToTime
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "full_price_list")
 data class CoinPriceInfo(
     @SerializedName("TYPE")
     @Expose
@@ -10,9 +15,10 @@ data class CoinPriceInfo(
     @SerializedName("MARKET")
     @Expose
     val market: String? = null,
+    @PrimaryKey
     @SerializedName("FROMSYMBOL")
     @Expose
-    val fromsymbol: String? = null,
+    val fromsymbol: String,
     @SerializedName("TOSYMBOL")
     @Expose
     val tosymbol: String? = null,
@@ -25,9 +31,6 @@ data class CoinPriceInfo(
     @SerializedName("LASTUPDATE")
     @Expose
     val lastupdate: Long? = null,
-    @SerializedName("MEDIAN")
-    @Expose
-    val median: Double? = null,
     @SerializedName("LASTVOLUME")
     @Expose
     val lastvolume: Double? = null,
@@ -103,33 +106,12 @@ data class CoinPriceInfo(
     @SerializedName("CHANGEPCTDAY")
     @Expose
     val changepctday: Double? = null,
-    @SerializedName("CHANGEHOUR")
-    @Expose
-    val changehour: Double? = null,
-    @SerializedName("CHANGEPCTHOUR")
-    @Expose
-    val changepcthour: Double? = null,
-    @SerializedName("CONVERSIONTYPE")
-    @Expose
-    val conversiontype: String? = null,
-    @SerializedName("CONVERSIONSYMBOL")
-    @Expose
-    val conversionsymbol: String? = null,
     @SerializedName("SUPPLY")
     @Expose
     val supply: Double? = null,
     @SerializedName("MKTCAP")
     @Expose
     val mktcap: Double? = null,
-    @SerializedName("MKTCAPPENALTY")
-    @Expose
-    val mktcappenalty: Long? = null,
-    @SerializedName("CIRCULATINGSUPPLY")
-    @Expose
-    val circulatingsupply: Double? = null,
-    @SerializedName("CIRCULATINGSUPPLYMKTCAP")
-    @Expose
-    val circulatingsupplymktcap: Double? = null,
     @SerializedName("TOTALVOLUME24H")
     @Expose
     val totalvolume24H: Double? = null,
@@ -145,4 +127,11 @@ data class CoinPriceInfo(
     @SerializedName("IMAGEURL")
     @Expose
     val imageurl: String? = null
-)
+) {
+    fun getFormattedTime():String{
+        return convertTimesToTime(lastupdate)
+    }
+    fun getFullImageUrl():String{
+        return BASE_IMAGE_URL + imageurl
+    }
+}
