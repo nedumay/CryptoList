@@ -11,7 +11,7 @@ import com.example.cryptolist.pojo.CoinPriceInfoRawData
 @Dao
 interface CoinPriceInfoDao {
 
-    @Query("SELECT * FROM full_price_list ORDER BY lastupdate DESC")
+    @Query("SELECT * FROM full_price_list ORDER BY price DESC")
     fun getPriceList(): LiveData<List<CoinPriceInfo>>
 
     @Query("SELECT * FROM full_price_list WHERE fromsymbol == :fSym LIMIT 1")
