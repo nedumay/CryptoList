@@ -22,7 +22,6 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getDetailInfo(fSym:String):LiveData<CoinPriceInfo>{
         return db.coinPriceInfoDao().getPriceInfoAboutCoin(fSym)
-
     }
 
     init {

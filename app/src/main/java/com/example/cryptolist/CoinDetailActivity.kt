@@ -33,9 +33,9 @@ class CoinDetailActivity : AppCompatActivity() {
         val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL)!!
         coinViewModel = ViewModelProviders.of(this)[CoinViewModel::class.java]
         coinViewModel.getDetailInfo(fromSymbol).observe(this, Observer {
-            textViewPrice.text = it.price.toString()
-            textViewMinPrice.text = it.lowday.toString()
-            textViewMaxPrice.text = it.highday.toString()
+            textViewPrice.text = it.price.toString() + "$"
+            textViewMinPrice.text = it.lowday.toString() + "$"
+            textViewMaxPrice.text = it.highday.toString() + "$"
             textViewLastDeal.text = it.market
             textViewTime.text = it.getFormattedTime()
             textViewSymbol.text = it.fromsymbol
