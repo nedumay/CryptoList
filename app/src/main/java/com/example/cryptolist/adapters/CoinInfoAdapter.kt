@@ -20,7 +20,7 @@ class CoinInfoAdapter: ListAdapter<CoinPriceInfo, CoinInfoViewHolder>(CoinInfoDi
     override fun onBindViewHolder(holder: CoinInfoViewHolder, position: Int) {
         val coin = getItem(position)
         holder.textViewSymbol.text = coin.fromsymbol
-        holder.textViewPrice.text = "Price: ${coin.price.toString()}$"
+        holder.textViewPrice.text = "${coin.price.toString()}$"
         holder.textViewTime.text = "Last update: ${coin.getFormattedTime()}"
         Picasso.get().load(coin.getFullImageUrl()).into(holder.imageViewLogoCoin)
         holder.itemView.setOnClickListener {
