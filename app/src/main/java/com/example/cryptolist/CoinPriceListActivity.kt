@@ -1,14 +1,11 @@
 package com.example.cryptolist
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptolist.adapters.CoinInfoAdapter
-import com.example.cryptolist.pojo.CoinPriceInfo
 
 class CoinPriceListActivity : AppCompatActivity() {
 
@@ -19,19 +16,18 @@ class CoinPriceListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_coin_price_list)
         coinViewModel = ViewModelProviders.of(this)[CoinViewModel::class.java]
 
-        val rwCoinInfoLsit = findViewById<RecyclerView>(R.id.recyclerViewCoinPriceList)
+        val rwCoinInfoList = findViewById<RecyclerView>(R.id.recyclerViewCoinPriceList)
         val coinAdapter = CoinInfoAdapter()
-        rwCoinInfoLsit.adapter = coinAdapter
+        rwCoinInfoList.adapter = coinAdapter
         coinViewModel.priceList.observe(this, Observer {
-            coinAdapter.coinInfoList = it
+            coinAdapter.submitList(it)
         })
-        coinAdapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
-            override fun onCoinClick(coinPriceInfo: CoinPriceInfo) {
-                startActivity(
-                    CoinDetailActivity
-                        .newIntent(this@CoinPriceListActivity, coinPriceInfo.fromsymbol)
-                )
-            }
+        coinAdapter.onCoinClickListener = {
+            startActivity(
+                CoinDetailActivity
+                    .newIntent(this@CoinPriceListActivity, it.fromsymbol)
+            )
+
         }
     }
 }
