@@ -1,4 +1,4 @@
-package com.example.cryptolist
+package com.example.cryptolist.presentation
 
 import android.content.Context
 import android.content.Intent
@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.cryptolist.R
 import com.squareup.picasso.Picasso
 
 class CoinDetailActivity : AppCompatActivity() {
@@ -57,7 +58,7 @@ class CoinDetailActivity : AppCompatActivity() {
         private const val EXTRA_FROM_SYMBOL = "fSym"
 
         fun newIntent(context: Context, fromSymbol:String):Intent{
-            val intent = Intent(context,CoinDetailActivity::class.java)
+            val intent = Intent(context, CoinDetailActivity::class.java)
             intent.putExtra(EXTRA_FROM_SYMBOL,fromSymbol)
             return intent
         }

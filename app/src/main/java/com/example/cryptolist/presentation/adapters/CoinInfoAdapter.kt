@@ -1,15 +1,15 @@
-package com.example.cryptolist.adapters
+package com.example.cryptolist.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.cryptolist.R
-import com.example.cryptolist.pojo.CoinPriceInfo
+import com.example.cryptolist.data.network.model.CoinInfoDto
 import com.squareup.picasso.Picasso
 
-class CoinInfoAdapter: ListAdapter<CoinPriceInfo, CoinInfoViewHolder>(CoinInfoDiffCallback()) {
+class CoinInfoAdapter: ListAdapter<CoinInfoDto, CoinInfoViewHolder>(CoinInfoDiffCallback()) {
 
-    var onCoinClickListener : ((CoinPriceInfo) -> Unit)? = null
+    var onCoinClickListener : ((CoinInfoDto) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinInfoViewHolder {
         val view = LayoutInflater.from(parent.context)

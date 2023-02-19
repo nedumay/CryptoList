@@ -1,14 +1,14 @@
-package com.example.cryptolist.pojo
+package com.example.cryptolist.data.network.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.cryptolist.api.ApiFactory.BASE_IMAGE_URL
+import com.example.cryptolist.data.network.ApiFactory.BASE_IMAGE_URL
 import com.example.cryptolist.utils.convertTimesToTime
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "full_price_list")
-data class CoinPriceInfo(
+data class CoinInfoDto(
     @SerializedName("TYPE")
     @Expose
     val type: String? = null,

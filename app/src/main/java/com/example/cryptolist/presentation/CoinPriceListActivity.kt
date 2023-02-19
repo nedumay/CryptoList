@@ -1,11 +1,12 @@
-package com.example.cryptolist
+package com.example.cryptolist.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cryptolist.adapters.CoinInfoAdapter
+import com.example.cryptolist.R
+import com.example.cryptolist.presentation.adapters.CoinInfoAdapter
 
 class CoinPriceListActivity : AppCompatActivity() {
 
@@ -24,8 +25,7 @@ class CoinPriceListActivity : AppCompatActivity() {
         })
         coinAdapter.onCoinClickListener = {
             startActivity(
-                CoinDetailActivity
-                    .newIntent(this@CoinPriceListActivity, it.fromsymbol)
+                CoinDetailActivity.newIntent(this@CoinPriceListActivity, it.fromsymbol)
             )
 
         }
