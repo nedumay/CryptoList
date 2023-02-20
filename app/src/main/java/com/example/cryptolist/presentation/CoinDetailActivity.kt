@@ -1,4 +1,4 @@
-package com.example.cryptolist
+package com.example.cryptolist.presentation
 
 import android.content.Context
 import android.content.Intent
@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import com.example.cryptolist.R
+import com.example.cryptolist.data.network.ApiFactory.BASE_IMAGE_URL
+import com.example.cryptolist.utils.convertTimesToTime
 import com.squareup.picasso.Picasso
 
 class CoinDetailActivity : AppCompatActivity() {
@@ -31,16 +34,16 @@ class CoinDetailActivity : AppCompatActivity() {
         }
         initView()
         val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL)!!
-        coinViewModel = ViewModelProviders.of(this)[CoinViewModel::class.java]
-        coinViewModel.getDetailInfo(fromSymbol).observe(this, Observer {
+        coinViewModel = ViewModelProvider(this)[CoinViewModel::class.java]
+        coinViewModel.getDetailInfo(fromSymbol).observe(this){
             textViewPrice.text = it.price.toString() + "$"
-            textViewMinPrice.text = it.lowday.toString() + "$"
-            textViewMaxPrice.text = it.highday.toString() + "$"
-            textViewLastDeal.text = it.market
-            textViewTime.text = it.getFormattedTime()
-            textViewSymbol.text = it.fromsymbol
-            Picasso.get().load(it.getFullImageUrl()).into(imageViewLogo)
-        })
+            textViewMinPrice.text = it.lowDay.toString() + "$"
+            textViewMaxPrice.text = it.highDay.toString() + "$"
+            textViewLastDeal.text = it.lastMarket
+            textViewTime.text = convertTimesToTime(it.lastUpdate)
+            textViewSymbol.text = it.fromSymbol
+            Picasso.get().load(BASE_IMAGE_URL + it.imageUrl).into(imageViewLogo)
+        }
     }
 
     private fun initView() {
@@ -57,7 +60,7 @@ class CoinDetailActivity : AppCompatActivity() {
         private const val EXTRA_FROM_SYMBOL = "fSym"
 
         fun newIntent(context: Context, fromSymbol:String):Intent{
-            val intent = Intent(context,CoinDetailActivity::class.java)
+            val intent = Intent(context, CoinDetailActivity::class.java)
             intent.putExtra(EXTRA_FROM_SYMBOL,fromSymbol)
             return intent
         }

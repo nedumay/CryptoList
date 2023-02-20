@@ -1,15 +1,17 @@
-package com.example.cryptolist.adapters
+package com.example.cryptolist.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.cryptolist.R
-import com.example.cryptolist.pojo.CoinPriceInfo
+import com.example.cryptolist.data.network.ApiFactory.BASE_IMAGE_URL
+import com.example.cryptolist.domain.CoinInfo
+import com.example.cryptolist.utils.convertTimesToTime
 import com.squareup.picasso.Picasso
 
-class CoinInfoAdapter: ListAdapter<CoinPriceInfo, CoinInfoViewHolder>(CoinInfoDiffCallback()) {
+class CoinInfoAdapter: ListAdapter<CoinInfo, CoinInfoViewHolder>(CoinInfoDiffCallback()) {
 
-    var onCoinClickListener : ((CoinPriceInfo) -> Unit)? = null
+    var onCoinClickListener : ((CoinInfo) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinInfoViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -19,10 +21,10 @@ class CoinInfoAdapter: ListAdapter<CoinPriceInfo, CoinInfoViewHolder>(CoinInfoDi
 
     override fun onBindViewHolder(holder: CoinInfoViewHolder, position: Int) {
         val coin = getItem(position)
-        holder.textViewSymbol.text = coin.fromsymbol
+        holder.textViewSymbol.text = coin.fromSymbol
         holder.textViewPrice.text = "${coin.price.toString()}$"
-        holder.textViewTime.text = "Last update: ${coin.getFormattedTime()}"
-        Picasso.get().load(coin.getFullImageUrl()).into(holder.imageViewLogoCoin)
+        holder.textViewTime.text = "Last update: ${convertTimesToTime(coin.lastUpdate)}"
+        Picasso.get().load(BASE_IMAGE_URL + coin.imageUrl).into(holder.imageViewLogoCoin)
         holder.itemView.setOnClickListener {
             onCoinClickListener?.invoke(coin)
         }
