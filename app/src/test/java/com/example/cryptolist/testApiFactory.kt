@@ -1,7 +1,5 @@
 package com.example.cryptolist
 
-import com.example.cryptolist.api.ApiFactory
-import com.example.cryptolist.api.ApiService
 import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

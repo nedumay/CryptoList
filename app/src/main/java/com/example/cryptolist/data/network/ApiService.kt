@@ -1,4 +1,4 @@
-package com.example.cryptolist.api
+package com.example.cryptolist.data.network
 
 import com.example.cryptolist.pojo.CoinInfoListOfData
 import com.example.cryptolist.pojo.CoinPriceInfoRawData
@@ -10,19 +10,19 @@ interface ApiService {
 
     @GET("top/totalvolfull")
     fun getTopCoinsInfo(
-        @Query(API_KEY) apiKey:String = "",
+        @Query(API_KEY) apiKey: String = "",
         @Query(QUERY_PARAM_LIMIT) limit: Int = 30,
         @Query(QUERY_PARAM_TO_SYMBOL) tSym: String = USD,
     ): Single<CoinInfoListOfData>
 
     @GET("pricemultifull")
     fun getFullPriceList(
-        @Query(API_KEY) apiKey:String = "",
+        @Query(API_KEY) apiKey: String = "",
         @Query(QUERY_PARAM_TO_SYMBOLS) tSyms: String = USD,
         @Query(QUERY_PARAM_FROM_SYMBOLS) fSyms: String,
     ): Single<CoinPriceInfoRawData>
 
-    companion object{
+    companion object {
         private const val API_KEY = "api_key"
         private const val QUERY_PARAM_LIMIT = "limit"
         private const val QUERY_PARAM_TO_SYMBOL = "tsym"

@@ -1,4 +1,4 @@
-package com.example.cryptolist.adapters
+package com.example.cryptolist.presentation.adapters
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.cryptolist.pojo.CoinPriceInfo

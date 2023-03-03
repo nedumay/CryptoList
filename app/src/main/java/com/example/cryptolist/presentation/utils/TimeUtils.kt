@@ -1,4 +1,4 @@
-package com.example.cryptolist.utils
+package com.example.cryptolist.presentation.utils
 
 import java.sql.Date
 import java.sql.Timestamp

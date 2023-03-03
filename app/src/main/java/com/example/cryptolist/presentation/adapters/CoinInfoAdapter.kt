@@ -1,4 +1,4 @@
-package com.example.cryptolist.adapters
+package com.example.cryptolist.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -2,8 +2,8 @@ package com.example.cryptolist.pojo
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.cryptolist.api.ApiFactory.BASE_IMAGE_URL
-import com.example.cryptolist.utils.convertTimesToTime
+import com.example.cryptolist.data.network.ApiFactory.BASE_IMAGE_URL
+import com.example.cryptolist.presentation.utils.convertTimesToTime
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

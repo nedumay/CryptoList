@@ -1,11 +1,11 @@
-package com.example.cryptolist
+package com.example.cryptolist.presentation
 
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.example.cryptolist.api.ApiFactory
-import com.example.cryptolist.database.AppDatabase
+import com.example.cryptolist.data.network.ApiFactory
+import com.example.cryptolist.data.database.AppDatabase
 import com.example.cryptolist.pojo.CoinPriceInfo
 import com.example.cryptolist.pojo.CoinPriceInfoRawData
 import com.google.gson.Gson

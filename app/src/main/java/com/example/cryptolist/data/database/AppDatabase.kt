@@ -1,4 +1,4 @@
-package com.example.cryptolist.database
+package com.example.cryptolist.data.database
 
 import android.content.Context
 import androidx.room.Database
@@ -16,12 +16,13 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(context: Context): AppDatabase {
             synchronized(LOCK) {
                 db?.let { return it }
-                val instance = Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME).build()
+                val instance =
+                    Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME).build()
                 db = instance
                 return instance
             }
         }
     }
 
-    abstract fun coinPriceInfoDao():CoinPriceInfoDao
+    abstract fun coinPriceInfoDao(): CoinPriceInfoDao
 }
