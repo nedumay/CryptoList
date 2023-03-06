@@ -6,12 +6,12 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "full_price_list")
 data class CoinInfoDbModel(
     @PrimaryKey
-    val fromsymbol: String,
-    val tosymbol: String?,
-    val price: Double?,
-    val lastupdate: Long?,
-    val highday: Double?,
-    val lowday: Double?,
-    val lastmarket: String?,
-    val imageurl: String?
+    val fromSymbol: String,
+    val toSymbol: String?,
+    val price: String?,
+    val lastUpdate: Long?,
+    val highDay: String?,
+    val lowDay: String?,
+    val lastMarket: String?,
+    val imageUrl: String?
 )

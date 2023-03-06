@@ -11,9 +11,10 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_logo_app"
         android:label="@string/app_name"
+        android:name=".presentation.app.CoinApp"
         android:supportsRtl="true"
         android:theme="@style/Theme.CryptoList"
-        tools:targetApi="31">
+        tools:targetApi="33">
         <activity
             android:name=".presentation.CoinDetailActivity"
             android:exported="false" />

@@ -2,8 +2,6 @@ package com.example.cryptolist.data.network.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.cryptolist.data.network.ApiFactory.BASE_IMAGE_URL
-import com.example.cryptolist.utils.convertTimesToTime
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -27,7 +25,7 @@ data class CoinInfoDto(
     val flags: String? = null,
     @SerializedName("PRICE")
     @Expose
-    val price: Double? = null,
+    val price: String? = null,
     @SerializedName("LASTUPDATE")
     @Expose
     val lastupdate: Long? = null,
@@ -57,10 +55,10 @@ data class CoinInfoDto(
     val openday: Double? = null,
     @SerializedName("HIGHDAY")
     @Expose
-    val highday: Double? = null,
+    val highday: String? = null,
     @SerializedName("LOWDAY")
     @Expose
-    val lowday: Double? = null,
+    val lowday: String? = null,
     @SerializedName("OPEN24HOUR")
     @Expose
     val open24Hour: Double? = null,
@@ -127,11 +125,4 @@ data class CoinInfoDto(
     @SerializedName("IMAGEURL")
     @Expose
     val imageurl: String? = null
-) {
-    fun getFormattedTime():String{
-        return convertTimesToTime(lastupdate)
-    }
-    fun getFullImageUrl():String{
-        return BASE_IMAGE_URL + imageurl
-    }
-}
+)

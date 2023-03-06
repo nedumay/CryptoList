@@ -2,32 +2,42 @@ package com.example.cryptolist.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.RecyclerView
-import com.example.cryptolist.R
+import androidx.lifecycle.ViewModelProvider
+import com.example.cryptolist.databinding.ActivityCoinPriceListBinding
 import com.example.cryptolist.presentation.adapters.CoinInfoAdapter
+import com.example.cryptolist.presentation.app.CoinApp
+import javax.inject.Inject
 
 class CoinPriceListActivity : AppCompatActivity() {
 
     private lateinit var coinViewModel: CoinViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val binding by lazy {
+        ActivityCoinPriceListBinding.inflate(layoutInflater)
+    }
+    private val component by lazy {
+        (application as CoinApp).component
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_coin_price_list)
-        coinViewModel = ViewModelProviders.of(this)[CoinViewModel::class.java]
+        setContentView(binding.root)
 
-        val rwCoinInfoList = findViewById<RecyclerView>(R.id.recyclerViewCoinPriceList)
+        coinViewModel = ViewModelProvider(this, viewModelFactory)[CoinViewModel::class.java]
+
         val coinAdapter = CoinInfoAdapter()
-        rwCoinInfoList.adapter = coinAdapter
-        coinViewModel.priceList.observe(this, Observer {
+        binding.recyclerViewCoinPriceList.adapter = coinAdapter
+        coinViewModel.coinInfoList.observe(this){
             coinAdapter.submitList(it)
-        })
+        }
+
         coinAdapter.onCoinClickListener = {
             startActivity(
-                CoinDetailActivity.newIntent(this@CoinPriceListActivity, it.fromsymbol)
+                CoinDetailActivity.newIntent(this@CoinPriceListActivity, it.fromSymbol)
             )
-
         }
     }
 }

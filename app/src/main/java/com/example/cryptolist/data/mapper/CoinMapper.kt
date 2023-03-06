@@ -6,58 +6,79 @@ import com.example.cryptolist.data.network.model.CoinInfoJsonContainerDto
 import com.example.cryptolist.data.network.model.CoinNamesListDto
 import com.example.cryptolist.domain.CoinInfo
 import com.google.gson.Gson
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.util.*
+import javax.inject.Inject
 
-class CoinMapper {
+class CoinMapper @Inject constructor() {
     // mapper для преобразование из Dto в модель базы данных
-    fun mapDtoToDbModel(dto: CoinInfoDto):CoinInfoDbModel{
+    fun mapDtoToDbModel(dto: CoinInfoDto): CoinInfoDbModel {
 
         return CoinInfoDbModel(
-            fromsymbol = dto.fromsymbol,
-            tosymbol = dto.tosymbol,
+            fromSymbol = dto.fromsymbol,
+            toSymbol = dto.tosymbol,
             price = dto.price,
-            lastupdate = dto.lastupdate,
-            highday = dto.highday,
-            lowday = dto.lowday,
-            lastmarket = dto.lastmarket,
-            imageurl = dto.imageurl
+            lastUpdate = dto.lastupdate,
+            highDay = dto.highday,
+            lowDay = dto.lowday,
+            lastMarket = dto.lastmarket,
+            imageUrl = BASE_IMAGE_URL + dto.imageurl
         )
     }
+
     // mapper для перевода из JsonObject в mutableListOf<CoinInfoDto>
-    fun mapJsonContainerToListCoinInfo(jsonContainer: CoinInfoJsonContainerDto):List<CoinInfoDto>{
+    fun mapJsonContainerToListCoinInfo(jsonContainer: CoinInfoJsonContainerDto): List<CoinInfoDto> {
         val result = mutableListOf<CoinInfoDto>()
         val jsonObject = jsonContainer.jsonObject ?: return result
-        val coinKeySet = jsonObject.keySet() // получаем набор ключей у jsonObject
-        for(coinKey in coinKeySet){
+        val coinKeySet = jsonObject.keySet()
+        for (coinKey in coinKeySet) {
             val currencyJson = jsonObject.getAsJsonObject(coinKey)
             val currencyKeySet = currencyJson.keySet()
-            for(currencyKey in currencyKeySet){
-                val priсeInfo = Gson()
-                    .fromJson(
-                        currencyJson.getAsJsonObject(currencyKey),
-                        CoinInfoDto::class.java
-                    )
-                result.add(priсeInfo)
+            for (currencyKey in currencyKeySet) {
+                val priceInfo = Gson().fromJson(
+                    currencyJson.getAsJsonObject(currencyKey),
+                    CoinInfoDto::class.java
+                )
+                result.add(priceInfo)
             }
         }
         return result
     }
+
     // для преобразования List в одну строку через запятую
-    fun mapCoinListToString(namesListDto: CoinNamesListDto):String{
+    fun mapCoinListToString(namesListDto: CoinNamesListDto): String {
         return namesListDto.names?.map {
             it.coinNameDto?.name
         }?.joinToString(",") ?: ""
     }
+
     // переобразование DbModel в Entity
-    fun mapDbModelToEntity(dbModel: CoinInfoDbModel):CoinInfo{
+    fun mapDbModelToEntity(dbModel: CoinInfoDbModel): CoinInfo {
         return CoinInfo(
-            fromsymbol = dbModel.fromsymbol,
-            tosymbol = dbModel.tosymbol,
+            fromSymbol = dbModel.fromSymbol,
+            toSymbol = dbModel.toSymbol,
             price = dbModel.price,
-            lastupdate = dbModel.lastupdate,
-            highday = dbModel.highday,
-            lowday = dbModel.lowday,
-            lastmarket = dbModel.lastmarket,
-            imageurl = dbModel.imageurl
+            lastUpdate = convertTimestampToTime(dbModel.lastUpdate),
+            highDay = dbModel.highDay,
+            lowDay = dbModel.lowDay,
+            lastMarket = dbModel.lastMarket,
+            imageUrl = dbModel.imageUrl
         )
+    }
+
+    private fun convertTimestampToTime(timestamp: Long?): String {
+        if (timestamp == null) return ""
+        val stamp = Timestamp(timestamp * 1000)
+        val date = Date(stamp.time)
+        val pattern = "HH:mm:ss"
+        val sdf = SimpleDateFormat(pattern, Locale.getDefault())
+        sdf.timeZone = TimeZone.getDefault()
+        return sdf.format(date)
+    }
+
+    companion object {
+
+        const val BASE_IMAGE_URL = "https://cryptocompare.com"
     }
 }
