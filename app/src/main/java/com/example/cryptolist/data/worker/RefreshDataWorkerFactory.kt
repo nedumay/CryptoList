@@ -1,4 +1,4 @@
-package com.example.cryptolist.worker
+package com.example.cryptolist.data.worker
 
 import android.content.Context
 import androidx.work.ListenableWorker
