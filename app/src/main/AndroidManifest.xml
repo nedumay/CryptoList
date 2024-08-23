@@ -14,7 +14,7 @@
         android:name=".presentation.app.CoinApp"
         android:supportsRtl="true"
         android:theme="@style/Theme.CryptoList"
-        tools:targetApi="33">
+        tools:targetApi="34">
         <activity
             android:name=".presentation.CoinDetailActivity"
             android:exported="false" />
@@ -27,6 +27,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="androidx.work.WorkManagerInitializer"
+            android:name="androidx.startup.InitializationProvider"
+            tools:replace="android:authorities"
+            tools:node="remove"
+            />
     </application>
 
 </manifest>

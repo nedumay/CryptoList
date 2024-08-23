@@ -1,15 +1,16 @@
 # CryptoList <img src="https://img.shields.io/badge/version-1.0.0-green" alt="App Version">
 A tutorial project on displaying a list of cryptocurrencies with temporary updates.
 
-Application сapabilities:
+Application capabilities:
 1. View a list of popular cryptocurrencies.
 2. View detailed information about the cryptocurrency (price and exchange).
 
 Language: Kotlin
 
-Pattern: MVVM, Clean architecture, Singltone
+Pattern: Singleton, Factory, Builder
 
 Tools and Libraries: Retrofit2, Room DataBase, Coroutines
+
 
 Api: https://min-api.cryptocompare.com/
 
