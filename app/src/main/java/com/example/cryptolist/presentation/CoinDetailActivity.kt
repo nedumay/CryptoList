@@ -2,24 +2,23 @@ package com.example.cryptolist.presentation
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.cryptolist.R
 import com.example.cryptolist.databinding.ActivityCoinDetailBinding
-import com.example.cryptolist.domain.CoinInfo
 import com.example.cryptolist.presentation.app.CoinApp
-import com.klim.tcharts.entities.ChartData
-import com.klim.tcharts.entities.ChartItem
+import com.jjoe64.graphview.series.DataPoint
+import com.jjoe64.graphview.series.LineGraphSeries
 import com.squareup.picasso.Picasso
 import javax.inject.Inject
-import kotlin.random.Random
 
 
 class CoinDetailActivity : AppCompatActivity() {
 
     private lateinit var coinViewModel: CoinViewModel
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -35,7 +34,7 @@ class CoinDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        if(!intent.hasExtra(EXTRA_FROM_SYMBOL)) {
+        if (!intent.hasExtra(EXTRA_FROM_SYMBOL)) {
             finish()
             return
         }
@@ -43,8 +42,20 @@ class CoinDetailActivity : AppCompatActivity() {
         val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL)!!
         coinViewModel = ViewModelProvider(this, viewModelFactory)[CoinViewModel::class.java]
 
+        val series = LineGraphSeries(arrayOf())
+        series.dataPointsRadius = 1f
+        binding.graphView.addSeries(series)
+        binding.graphView.viewport.apply {
+            isScrollable = true
+            setScalable(true)
+            setScrollableY(true)
+            isScalable = true
+            setScalableY(true)
+        }
+
+
         coinViewModel.getDetailInfo(fromSymbol).observe(this, Observer {
-            with(binding){
+            with(binding) {
                 textViewPrice.text = it.price + "$"
                 textViewMinPrice.text = it.lowDay + "$"
                 textViewMaxPrice.text = it.highDay + "$"
@@ -53,46 +64,22 @@ class CoinDetailActivity : AppCompatActivity() {
                 textViewSymbol.text = it.fromSymbol
                 Picasso.get().load(it.imageUrl).into(imageViewLogo)
 
-                //setupGraph(it, binding)
 
+                val price = it.price?.toDoubleOrNull() ?: 0.0
+                val lastxValue = System.currentTimeMillis().toDouble()
+                series.appendData(DataPoint(lastxValue, price), true, 10000000)
+                binding.graphView.invalidate()
             }
         })
     }
 
-    private fun setupGraph(data: CoinInfo, binding: ActivityCoinDetailBinding) {
-        val keys = ArrayList<String>() //keys for each chart
-        val names = ArrayList<String>() //names for chart
-        val colors = ArrayList<Int>() //colors for lines
-        val items = ArrayList<ChartItem>() //charts value for some time
 
-        keys.add(data.fromSymbol)
-        names.add("Green Line")
-        colors.add(Color.GREEN)
-
-        // Начало времени
-        var startTime = 1614542230000L
-        startTime+=data.lastUpdate!!.toLong()*1000
-
-        val random: Random = Random(startTime)
-        val values = ArrayList<Int>()
-        for (j in keys.indices) {
-            values.add(random.nextInt(1000))
-        }
-
-        val chartItem = ChartItem(startTime, values)
-        items.add(chartItem)
-
-        val chartData: ChartData = ChartData(keys, names, colors, items)
-        binding.graphView.setData(chartData, true)
-        binding.graphView.setTitle(String.format("Chart #%d", 1))
-    }
-
-    companion object{
+    companion object {
         private const val EXTRA_FROM_SYMBOL = "fSym"
 
-        fun newIntent(context: Context, fromSymbol:String):Intent{
+        fun newIntent(context: Context, fromSymbol: String): Intent {
             val intent = Intent(context, CoinDetailActivity::class.java)
-            intent.putExtra(EXTRA_FROM_SYMBOL,fromSymbol)
+            intent.putExtra(EXTRA_FROM_SYMBOL, fromSymbol)
             return intent
         }
     }

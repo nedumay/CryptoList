@@ -43,7 +43,7 @@ class RefreshDataWorker(
                 Log.d("Worker", "Error: ${e.message}")
             }
         }
-        delay(10000)
+        delay(3000)
     }
 
     companion object{
