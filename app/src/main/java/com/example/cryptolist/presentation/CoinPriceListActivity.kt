@@ -11,6 +11,7 @@ import javax.inject.Inject
 class CoinPriceListActivity : AppCompatActivity() {
 
     private lateinit var coinViewModel: CoinViewModel
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -27,10 +28,14 @@ class CoinPriceListActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         coinViewModel = ViewModelProvider(this, viewModelFactory)[CoinViewModel::class.java]
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         val coinAdapter = CoinInfoAdapter()
         binding.recyclerViewCoinPriceList.adapter = coinAdapter
-        coinViewModel.coinInfoList.observe(this){
+        coinViewModel.coinInfoList.observe(this) {
             coinAdapter.submitList(it)
         }
 
