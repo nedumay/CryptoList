@@ -1,6 +1,7 @@
 package com.example.cryptolist.presentation.adapters
 
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -21,12 +22,15 @@ class CoinInfoAdapter: ListAdapter<CoinInfo, CoinInfoViewHolder>(CoinInfoDiffCal
         return CoinInfoViewHolder(binding)
     }
 
+    @SuppressLint("SetTextI18n", "DefaultLocale")
     override fun onBindViewHolder(holder: CoinInfoViewHolder, position: Int) {
         val coin = getItem(position)
         with(holder.binding) {
             with(coin) {
                 textViewSymbol.text = fromSymbol
-                textViewPrice.text = price + "$"
+                val newPrice = price?.toDouble() ?: 0.0
+                val formattedPrice = String.format("%.2f", newPrice)
+                textViewPrice.text = "$formattedPrice $"
                 textViewLastUpdate.text = "Last update: $lastUpdate"
                 Picasso.get().load(imageUrl).into(imageViewLogo)
                 root.setOnClickListener {
