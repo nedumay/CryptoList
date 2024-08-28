@@ -24,51 +24,58 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.example.cryptolist'
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-ktx:1.13.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.work:work-runtime-ktx:2.9.1'
     //coroutines
-    def coroutines_ver = "1.6.4"
+    def coroutines_ver = '1.8.1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_ver"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_ver"
     // retrofit2
-    def retrofit_ver = "2.9.0"
+    def retrofit_ver = '2.11.0'
     implementation "com.squareup.retrofit2:retrofit:$retrofit_ver"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_ver"
     // room db
-    def room_ver = "2.5.0"
+    def room_ver = '2.6.1'
     implementation("androidx.room:room-runtime:$room_ver")
     kapt "androidx.room:room-compiler:$room_ver"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4'
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$room_ver")
     //dagger 2
-    def dag_ver = "2.35.1"
+    def dag_ver = '2.51'
     implementation "com.google.dagger:dagger:$dag_ver"
     kapt "com.google.dagger:dagger-compiler:$dag_ver"
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
-    kapt "androidx.lifecycle:lifecycle-compiler:2.5.1"
-    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:2.5.1"
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.8.4'
+
+    //implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.8.3'
+    //implementation 'androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.3'
+    //implementation 'androidx.lifecycle:lifecycle-reactivestreams-ktx:2.8.3'
     //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    implementation 'com.jjoe64:graphview:4.2.2'
+
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }
