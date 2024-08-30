@@ -1,10 +1,12 @@
 # CryptoList <img src="https://img.shields.io/badge/version-1.0.0-green" alt="App Version">
-A tutorial project on displaying a list of cryptocurrencies with temporary updates. Update app: 28.08.2024
+A tutorial project on displaying a list of cryptocurrencies with temporary updates. Update app: 30.08.2024
 
 Application сapabilities:
 1. View a list of popular cryptocurrencies.
 2. View detailed information about the cryptocurrency (price and exchange).
-3. 3.At this stage, work is in progress to display the graph ...
+3. At this stage, work is in progress to display the graph ...
+
+In future updates: news page will be added, new UI
 
 Language: Kotlin
 
