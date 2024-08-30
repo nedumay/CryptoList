@@ -16,6 +16,7 @@ import com.jjoe64.graphview.DefaultLabelFormatter
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import com.squareup.picasso.Picasso
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -47,6 +48,11 @@ class CoinDetailActivity : AppCompatActivity() {
             return
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL)!!
         coinViewModel = ViewModelProvider(this, viewModelFactory)[CoinViewModel::class.java]
 
@@ -54,22 +60,10 @@ class CoinDetailActivity : AppCompatActivity() {
         series.color = ContextCompat.getColor(this, R.color.graphLineColor)
 
         binding.graphView.addSeries(series)
-
-        binding.graphView.viewport.apply {
-            isScrollable = true
-            setScalable(true)
-            setScrollableY(true)
-            isScalable = true
-            setScalableY(true)
-        }
-
-        binding.graphView.gridLabelRenderer.apply {
-            horizontalAxisTitle = "Time"
-            verticalAxisTitle = "Price $"
-            isHorizontalLabelsVisible = true
-            isVerticalLabelsVisible = true
-
-        }
+        // Установка скрола для графика
+        setScrollGraphView()
+        // Устанвока подписей на оси графика
+        setGridLable()
 
 
         coinViewModel.getDetailInfo(fromSymbol).observe(this, Observer {
@@ -85,8 +79,16 @@ class CoinDetailActivity : AppCompatActivity() {
                 textViewSymbol.text = it.fromSymbol
                 Picasso.get().load(it.imageUrl).into(imageViewLogo)
 
+                val dateFormatter = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+                val lastUpdateDate: Date? = try {
+                    dateFormatter.parse(it.lastUpdate)
+                } catch (e: ParseException) {
+                    null
+                }
+
+
                 val price = it.price?.toDoubleOrNull() ?: 0.0
-                val lastUpdate = Date(System.currentTimeMillis())
+                val lastUpdate = lastUpdateDate?.time?.toDouble() ?: System.currentTimeMillis().toDouble() //Date(System.currentTimeMillis())
 
                 series.appendData(DataPoint(lastUpdate, price), true, 10000000)
                 binding.graphView.onDataChanged(true, true)
@@ -103,6 +105,27 @@ class CoinDetailActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun setGridLable() {
+        binding.graphView.gridLabelRenderer.apply {
+            horizontalAxisTitle = "Time"
+            verticalAxisTitle = "Price $"
+            isHorizontalLabelsVisible = true
+            isVerticalLabelsVisible = true
+
+        }
+    }
+
+    private fun setScrollGraphView() {
+        binding.graphView.viewport.apply {
+            isScrollable = true
+            setScalable(true)
+            setScrollableY(true)
+            isScalable = true
+            setScalableY(true)
+
+        }
     }
 
     @SuppressLint("DefaultLocale")
